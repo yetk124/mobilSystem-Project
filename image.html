@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title >라즈베리파이를이용한애완견 키우기시스템 </title >
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/paho-mqtt/1.0.2/mqttws31.min.js"type="text/javascript"></script>
+        <script src="./static/mqttio3.js"type="text/javascript"></script>
+        <script src="./static/mycamera.js"type="text/javascript"></script>
+        <script>
+            window.addEventListener("load", function() {
+            // http://224..129:8080/에서 224...의 IP만 끊어내는 코드
+            var urlnew String(document.location);
+            ip= (url.split("//"))[1]; // ip = "224...:8080/"
+            ip= (ip.split(":"))[0]; // ip = "224..."
+            document.getElementById("broker").valueip
+});
+        function visible_th(temp, humi){  //온습도를 출력하는 코드
+            // 기온 출력
+               var divdocument.getElementById("info");
+               div.innerHTML"<br>-현재 강아지 집의 온도🔅는 <strong>"+Math.round(temp)+"</strong>도, "
+               div.innerHTML+= "습도💧는 <strong>"+Math.round(humi)+"%</strong>입니다.-"
+               div.innerHTML+= "<br>"
+}
+        function visible_d(distance) { //거리를 재서 배급이 필요한지 보여주는 코드
+            //거리 출력
+            if(distance <20) {
+                var d'사료 배급 필요'
+}
+            else{
+                var d'사급 배급 불필요'
+}
+            var divdocument.getElementById("d");
+            div.innerHTML"<br>강아지는 지금 <strong>"+d+"</strong>합니다."
+            div.innerHTML+= "<br>"
+}
+        function visible_l(light) { //조도센서를 이용하는 코드 
+            if(light>=15) {
+                var l'어두워져 불을 킵니다'
+}
+            else{
+                var l'밝아져 불을 끕니다'
+}
+            var divdocument.getElementById("l");
+            div.innerHTML"<br>밖이 <strong>"l"</strong>."
+            div.innerHTML+= "<br>"
+}
+        </script>
+        </script>
+        <script type="text/javascript">
+            document.addEventListener("DOMContentLoaded",function() {
+                //시간을딜레이없이나타내기위한선실행
+            realTimer();
+            //이후0.5초에한번씩시간을갱신한다.
+            setInterval(realTimer,500);
+});
+            //현재날짜와시간을실시간으로보여준다
+            function realTimer(){
+            var xdocument.getElementById("timeNow");
+            x.style.fontSize"18px";
+            x.style.color"black";
+            nowDatenew Date();
+            const yearnowDate.getFullYear();
+            const monthnowDate.getMonth()+1;
+            const datenowDate.getDate();
+            const hournowDate.getHours();
+            const minnowDate.getMinutes();
+            const secnowDate.getSeconds();
+            document.getElementById("timeNow").innerHTMLnowDate.toLocaleString('ko-kr');
+}
+            //1자리수의숫자인경우앞에0을붙여준다.
+            function putZero(num){
+                if(num <10){num="0"+num;}
+                return num;
+}
+        </script>
+        <style>
+            #nav{
+                background-color: rgb(241, 212, 217);
+                width: 25%;
+                height: 700px;
+                float: left;
+                border: 2px solid palevioletred;
+                margin-top:10px;
+                margin-right: 5px;
+                margin-left: 5px;
+                margin-bottom: 10px;
+}
+            #div{
+                background-color: rgb(241, 212, 217);
+                width: 73%;
+                height: 700px;
+                float: left;
+                border: 2px solid palevioletred;
+                margin-top:10px;
+                margin-right: 5px;
+                margin-left: 5px;
+                margin-bottom: 10px;
+}
+            hr{
+                backgroundpalevioletred;
+                height: 2px;
+                border: 0;
+}
+            button{
+                background-color: palevioletred;
+}
+        </style>
+    </head>
+    <body style="background-color:rgb(247, 229, 231);">
+        <center>
+            <h1>🐶 PET DOG SYSTEM 🐶</h1>
+            <hr>
+            <b ><span id="timeNow"></span ><b>
+            <hr>
+        </center>
+        <div id="nav">
+            <form id="connection-form ">
+                <center>
+                    <br><br><br><br><br><br><br>
+                    <b style="color:black">관리자IP:</b >
+                        <input id="broker"type="text"name="broker"value="">
+                        <br>
+                        <br>
+                        <br>
+                        <input type="button"onclick="startConnect()"value="연결 ON">
+                        <input type="button"onclick="startDisconnect()"value="연결 OFF">
+                </center>
+        </div>
+        <div id="div">
+            <form id="subcruibe-form">
+                <center>
+                <br>
+                <b style="color:black">🐕‍🦺 강아지 집 온도 🐕‍🦺</b>
+                <span id="info"></span>
+                <input type="button"value="house ✅"onclick="visible_th({{temp}}, {{humi}})">
+                <br><br>
+                <b style="color:black">🐕‍🦺 강아지 사료 배급 🐕‍🦺</b>
+                <span id="d"></span>
+                <input type="button"value="eat ✅"onclick="visible_d({{distance}})">
+                <br><br>
+                <b style="color:black">🐕‍🦺 강아지 집 밝기 🐕‍🦺</b>
+                <span id="l"></span>
+                <input type="button"value="light ✅"onclick="visible_l({{light}})">
+                <br><br>
+                <form id="camera-form">
+                    <b>📷 강아지 상태 살피기 📷</b>
+                    <input type="button"value="camera ✅"onclick="recognize()">
+                </form>
+                <br>
+                <div id="canvas"><canvas id="myCanvas"width="320"height="240"></canvas></div>
+                </center>
+                <br><br><br><br>
+                <div id="messages"></div>
+            </form>
+        </div>
+    </body>
+</html>
