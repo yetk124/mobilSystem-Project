@@ -1,4 +1,4 @@
-# mobilSystem-Project
+# mobileSystem-Project
 
 ## 🐾 라즈베리 파이를 이용한 애완견 관리 시스템
 2022.09 ~ 2022.12
